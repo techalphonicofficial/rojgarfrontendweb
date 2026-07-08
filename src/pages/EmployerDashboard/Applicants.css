@@ -1,0 +1,77 @@
+/* Applicants page card layout */
+
+.applicant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.applicant-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--ed-border);
+  border-radius: 16px;
+  box-shadow: 0 12px 24px -8px rgba(30, 41, 59, 0.2);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.applicant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px -12px rgba(30, 41, 59, 0.3);
+}
+
+.applicant-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background: var(--ed-teal);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.applicant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.applicant-name {
+  font-weight: 800;
+  color: var(--ed-ink);
+}
+
+.applicant-meta {
+  color: var(--ed-muted);
+  font-size: 0.85rem;
+}
+
+.applicant-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.applicant-actions button {
+  flex: 1;
+  min-height: 38px;
+}
+
+/* Reuse existing button styles */
+.applicant-actions .shortlist-btn {
+  background: var(--ed-brand);
+  color: #fff;
+}
+
+.applicant-actions .reject-btn {
+  background: #fef3f2;
+  color: #b42318;
+  border: 1px solid #fecdca;
+}

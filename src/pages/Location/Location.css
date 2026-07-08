@@ -1,0 +1,89 @@
+/* src/pages/Location/Location.css */
+
+.location-picker {
+  max-width: 800px;
+  width: calc(100% - 3rem);
+  margin: 7rem auto 3rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.location-picker .section-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.35rem;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.location-picker .location-helper {
+  margin-bottom: 1.25rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.location-picker .select-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.location-picker .select-label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.location-picker .styled-select {
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #dcdfe6;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1rem;
+  width: 100%;
+  min-width: 0;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.location-picker .styled-select:focus {
+  border-color: #5c9ded;
+  box-shadow: 0 0 0 3px rgba(92, 157, 237, 0.2);
+}
+
+.location-picker .location-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.location-picker .location-actions .btn-primary {
+  min-width: 140px;
+}
+
+.location-picker .location-actions .btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .location-picker {
+    width: calc(100% - 2rem);
+    margin-top: 6.5rem;
+    padding: 1.25rem;
+  }
+
+  .location-picker .section-title {
+    font-size: 1.5rem;
+  }
+
+  .location-picker .select-group {
+    grid-template-columns: 1fr;
+  }
+}

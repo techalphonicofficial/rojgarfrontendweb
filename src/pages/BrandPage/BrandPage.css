@@ -1,0 +1,416 @@
+.brand-page {
+  background: #f7faf9;
+  color: #10212f;
+  min-height: 100vh;
+}
+
+.brand-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.brand-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 640px;
+  background-position: center;
+  background-size: cover;
+  isolation: isolate;
+}
+
+.brand-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(11, 32, 42, 0.9) 0%, rgba(11, 32, 42, 0.68) 42%, rgba(11, 32, 42, 0.18) 78%),
+    rgba(18, 38, 47, 0.14);
+}
+
+.brand-hero-content {
+  width: min(720px, calc(100% - 3rem));
+  margin-left: max(1.5rem, calc((100vw - 1180px) / 2));
+  padding: 5rem 0 4.25rem;
+  color: #ffffff;
+}
+
+.brand-eyebrow,
+.brand-section-label,
+.brand-state-kicker {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(31, 154, 139, 0.14);
+  color: #14766d;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.brand-eyebrow {
+  background: rgba(255, 255, 255, 0.16);
+  color: #d7fffa;
+}
+
+.brand-hero h1 {
+  max-width: 680px;
+  margin: 1.2rem 0 1rem;
+  color: #ffffff;
+  font-size: 4.75rem;
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.brand-hero p {
+  max-width: 620px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.2rem;
+  line-height: 1.75;
+}
+
+.brand-highlight-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  max-width: 680px;
+  margin-top: 1.7rem;
+}
+
+.brand-highlight-row span {
+  padding: 0.52rem 0.78rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.brand-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.brand-primary-link,
+.brand-secondary-link,
+.brand-state-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.78rem 1.05rem;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.brand-primary-link {
+  background: #eb6d4a;
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(235, 109, 74, 0.28);
+}
+
+.brand-secondary-link {
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  color: #ffffff;
+}
+
+.brand-overview-band,
+.brand-final-band {
+  background: #ffffff;
+}
+
+.brand-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1fr);
+  gap: 3rem;
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+.brand-overview-grid h2,
+.brand-section-heading h2,
+.brand-panel h2,
+.brand-note h2,
+.brand-related h2 {
+  margin: 0.9rem 0 0;
+  color: #10212f;
+  font-size: 2.35rem;
+  line-height: 1.14;
+  letter-spacing: 0;
+}
+
+.brand-copy p,
+.brand-note p {
+  color: #52636f;
+  font-size: 1rem;
+  line-height: 1.82;
+}
+
+.brand-copy p + p,
+.brand-note p + p {
+  margin-top: 1rem;
+}
+
+.brand-section {
+  padding: 5rem 0;
+}
+
+.brand-section-soft {
+  background: #eef7f4;
+}
+
+.brand-section-heading {
+  max-width: 700px;
+  margin-bottom: 2rem;
+}
+
+.brand-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.brand-service-card {
+  min-height: 228px;
+  padding: 1.35rem;
+  border: 1px solid #dce8e6;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(16, 33, 47, 0.06);
+}
+
+.brand-card-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 8px;
+  background: #eaf7f5;
+  color: #137a71;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.brand-service-card h3 {
+  margin: 1rem 0 0.65rem;
+  color: #10212f;
+  font-size: 1.18rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.brand-service-card p {
+  color: #5f6f79;
+  line-height: 1.7;
+}
+
+.brand-two-column,
+.brand-final-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.brand-panel,
+.brand-note,
+.brand-related,
+.brand-state-panel {
+  border: 1px solid #d8e8e4;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 2rem;
+  box-shadow: 0 16px 34px rgba(16, 33, 47, 0.07);
+}
+
+.brand-panel-accent {
+  border-color: #f0d6c7;
+  background: #fff9f5;
+}
+
+.brand-list {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.35rem;
+}
+
+.brand-list-item {
+  display: grid;
+  grid-template-columns: 0.75rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.brand-list-item span {
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: #eb6d4a;
+}
+
+.brand-list-item p {
+  color: #52636f;
+  line-height: 1.68;
+}
+
+.brand-final-grid {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.brand-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.3rem;
+}
+
+.brand-related-links a {
+  display: inline-flex;
+  min-height: 2.65rem;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #d6e7e4;
+  border-radius: 8px;
+  background: #f5fbfa;
+  color: #174c55;
+  font-weight: 800;
+}
+
+.brand-page-state {
+  display: grid;
+  place-items: center;
+  padding: 6rem 1.5rem;
+  background: #eef7f4;
+}
+
+.brand-state-panel {
+  width: min(560px, 100%);
+  text-align: center;
+}
+
+.brand-state-panel h1 {
+  margin: 1rem 0 0.65rem;
+  font-size: 2.2rem;
+  letter-spacing: 0;
+}
+
+.brand-state-panel p {
+  color: #5f6f79;
+}
+
+.brand-state-link {
+  margin-top: 1.3rem;
+  background: #1f9a8b;
+  color: #ffffff;
+}
+
+@media (max-width: 980px) {
+  .brand-hero {
+    min-height: 590px;
+    background-position: 58% center;
+  }
+
+  .brand-hero-content {
+    width: min(660px, calc(100% - 3rem));
+    padding-top: 4rem;
+  }
+
+  .brand-hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .brand-overview-grid,
+  .brand-two-column,
+  .brand-final-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .brand-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-container {
+    padding: 0 1rem;
+  }
+
+  .brand-hero {
+    min-height: 560px;
+    background-position: 61% center;
+  }
+
+  .brand-hero-shade {
+    background:
+      linear-gradient(90deg, rgba(11, 32, 42, 0.94) 0%, rgba(11, 32, 42, 0.74) 64%, rgba(11, 32, 42, 0.34) 100%),
+      rgba(18, 38, 47, 0.2);
+  }
+
+  .brand-hero-content {
+    width: calc(100% - 2rem);
+    margin-left: 1rem;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .brand-hero h1 {
+    font-size: 2.55rem;
+    line-height: 1.08;
+  }
+
+  .brand-hero p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .brand-highlight-row {
+    gap: 0.5rem;
+  }
+
+  .brand-highlight-row span {
+    font-size: 0.78rem;
+  }
+
+  .brand-primary-link,
+  .brand-secondary-link {
+    width: 100%;
+  }
+
+  .brand-overview-grid {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .brand-section {
+    padding: 3.5rem 0;
+  }
+
+  .brand-overview-grid h2,
+  .brand-section-heading h2,
+  .brand-panel h2,
+  .brand-note h2,
+  .brand-related h2 {
+    font-size: 1.85rem;
+  }
+
+  .brand-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel,
+  .brand-note,
+  .brand-related,
+  .brand-state-panel {
+    padding: 1.35rem;
+  }
+}

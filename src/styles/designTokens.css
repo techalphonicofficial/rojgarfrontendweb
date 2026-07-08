@@ -1,0 +1,145 @@
+/* designTokens.css – global design system */
+:root {
+  /* Primary palette */
+  --color-primary: #3b3b8f; /* deep indigo */
+  --color-primary-light: #5c5cbf;
+  --color-primary-dark: #28286b;
+
+  /* Accent */
+  --color-accent: #00c9a7; /* teal */
+  --color-accent-light: #33d9c0;
+  --color-accent-dark: #00957a;
+
+  /* Neutrals */
+  --color-bg-light: #f5f7fa;
+  --color-bg-dark: #1e1e2f;
+  --color-surface: rgba(255, 255, 255, 0.12);
+  --color-surface-dark: rgba(0, 0, 0, 0.42);
+  --color-text-primary: #212121;
+  --color-text-primary-dark: #e0e0e0;
+  --color-text-muted: #666666;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+
+  /* Typography */
+  --font-base: 'Inter', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Glassmorphism */
+  --blur-radius: 12px;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-dark: rgba(0, 0, 0, 0.32);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-out;
+  --transition-medium: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode – auto via prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: var(--color-bg-dark);
+    --color-surface: var(--color-surface-dark);
+    --color-text-primary: var(--color-text-primary-dark);
+    --color-text-muted: #aaaaaa;
+  }
+}
+
+/* Light mode default */
+:root {
+  --color-bg: var(--color-bg-light);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-base);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Button utilities */
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-medium);
+}
+.btn-primary:hover {
+  background: var(--color-accent-light);
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-medium);
+}
+.btn-secondary:hover {
+  background: var(--color-primary);
+  color: #fff;
+  transform: scale(1.02);
+}
+
+/* Card – glassmorphism */
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-radius));
+  border-radius: 1rem;
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: var(--transition-medium);
+}
+[data-theme='dark'] .card {
+  background: var(--glass-bg-dark);
+}
+.card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+/* Form grid utilities */
+.form-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+@media (min-width: 768px) {
+  .form-grid-two { grid-template-columns: repeat(2, 1fr); }
+  .form-grid-three { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Input styling */
+.input-field {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: var(--transition-fast);
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(0,201,167,0.2);
+}

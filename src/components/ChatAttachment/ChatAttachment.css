@@ -1,0 +1,76 @@
+.chat-attachment {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.42);
+  border-radius: 9px;
+  color: #1e293b;
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-bottom: 0.45rem;
+  max-width: 360px;
+  min-width: min(260px, 68vw);
+  overflow: hidden;
+  padding: 0.55rem;
+  text-decoration: none;
+}
+
+.chat-attachment.is-image {
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+}
+
+.chat-attachment > img {
+  border-radius: 6px;
+  height: 54px;
+  object-fit: cover;
+  width: 54px;
+}
+
+.chat-attachment-icon {
+  align-items: center;
+  background: #eef2ff;
+  border-radius: 7px;
+  color: #3730a3;
+  display: flex;
+  font-size: 0.62rem;
+  font-weight: 900;
+  height: 38px;
+  justify-content: center;
+  width: 42px;
+}
+
+.chat-attachment-copy {
+  min-width: 0;
+}
+
+.chat-attachment-copy strong,
+.chat-attachment-copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-attachment-copy strong {
+  color: #1e293b;
+  font-size: 0.76rem;
+}
+
+.chat-attachment-copy small {
+  color: #64748b;
+  font-size: 0.64rem;
+  margin-top: 0.18rem;
+}
+
+.chat-attachment-action {
+  color: #175cd3;
+  font-size: 0.66rem;
+  font-weight: 850;
+}
+
+@media (max-width: 520px) {
+  .chat-attachment {
+    min-width: 0;
+    width: 100%;
+  }
+}
