@@ -1,39 +1,58 @@
-/* Basic Variables for Light Theme */
+/* ─── Design Tokens ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --aj-bg: #f4f7fb;
+  --aj-bg: #f0f4f8;
   --aj-surface: #ffffff;
-  --aj-border: #e5e7eb;
+  --aj-surface-2: #f8fafc;
+  --aj-border: #e2e8f0;
+  --aj-border-light: rgba(226, 232, 240, 0.6);
   --aj-primary: #e6643c;
-  --aj-text-main: #111827;
-  --aj-text-muted: #6b7280;
+  --aj-primary-dark: #c94e27;
+  --aj-primary-light: #fef3ef;
+  --aj-blue: #2563eb;
+  --aj-blue-dark: #1d4ed8;
+  --aj-text-main: #0f172a;
+  --aj-text-secondary: #334155;
+  --aj-text-muted: #64748b;
+  --aj-text-subtle: #94a3b8;
+  --aj-green: #16a34a;
+  --aj-green-bg: #f0fdf4;
+  --aj-red: #dc2626;
+  --aj-shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --aj-shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  --aj-shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+  --aj-radius-sm: 8px;
+  --aj-radius-md: 12px;
+  --aj-radius-lg: 16px;
   --aj-serif: 'Inter', system-ui, sans-serif;
+  --sidebar-w: 300px;
 }
 
+/* ─── Page Shell ────────────────────────────────────────────── */
 .all-jobs-page {
   padding-top: 80px;
   background: var(--aj-bg);
   min-height: calc(100vh - 80px);
   color: var(--aj-text-main);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--aj-serif);
 }
 
-/* We'll hide the hero or make it very minimalistic since the dark theme focuses on the content */
 .all-jobs-hero {
-  display: none; /* Let's hide the big hero for this clean layout, or we can just make it dark */
+  display: none;
 }
 
-/* Sidebar & Main Layout */
+/* ─── Layout Grid ───────────────────────────────────────────── */
 .all-jobs-content {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
-  gap: 2rem;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  gap: 0;
   align-items: start;
-  padding: 0;
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
-/* Sidebar */
+/* ─── Sidebar ───────────────────────────────────────────────── */
 .filters-sidebar {
   position: sticky;
   top: 80px;
@@ -43,71 +62,112 @@
   border-right: 1px solid var(--aj-border);
   display: flex;
   flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: var(--aj-border) transparent;
 }
 
+.filters-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.filters-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.filters-sidebar::-webkit-scrollbar-thumb {
+  background: var(--aj-border);
+  border-radius: 4px;
+}
+
+/* Sidebar Header */
 .filters-header-block {
-  background: var(--aj-primary);
-  padding: 1.5rem 1.5rem;
+  background: linear-gradient(135deg, var(--aj-primary) 0%, var(--aj-primary-dark) 100%);
+  padding: 1.75rem 1.5rem;
   color: white;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filters-header-block::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .filters-header-block h2 {
-  font-family: var(--aj-serif);
-  font-size: 2.2rem;
-  margin: 0 0 0.25rem 0;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
 }
 
 .filters-header-block p {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.9;
+  display: none; /* Hide helper line to keep it clean */
 }
 
+
 .filters-clear-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
   color: white;
   border-radius: 20px;
-  padding: 0.35rem 0.8rem;
-  font-size: 0.8rem;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .filters-clear-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
 }
 
 .filters-clear-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
+/* Sidebar Body */
 .filters-body {
-  padding: 1.5rem;
+  padding: 1.25rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-/* Filter Groups */
+/* Filter Group Heading */
 .filter-group h4 {
-  color: var(--aj-text-main);
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.85rem;
+  color: var(--aj-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-/* Pill Toggles for Job Type */
+/* ─── Job Type Switch Pills ─────────────────────────────────── */
 .job-source-switch {
   display: flex;
   gap: 0.5rem;
+  background: var(--aj-surface-2);
+  border-radius: 10px;
+  padding: 0.3rem;
+  border: 1px solid var(--aj-border-light);
 }
 
 .job-source-switch label {
@@ -115,117 +175,149 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  height: 40px;
-  border: 1px solid var(--aj-border);
+  gap: 0.35rem;
+  height: 36px;
+  border: none;
   border-radius: 8px;
   color: var(--aj-text-muted);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
 }
 
 .job-source-switch label:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0,0,0,0.04);
   color: var(--aj-text-main);
 }
 
 .job-source-switch label.is-active {
-  background: var(--aj-text-main);
+  background: linear-gradient(135deg, var(--aj-primary) 0%, var(--aj-primary-dark) 100%);
   color: #fff;
-  border-color: var(--aj-text-main);
+  box-shadow: 0 4px 12px rgba(230, 100, 60, 0.35);
 }
+
 
 .job-source-switch input {
   display: none;
 }
 
 .job-source-switch label svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
 }
 
-/* Category Search & Pills */
+/* ─── Category Search & Pills ───────────────────────────────── */
 .category-search-wrapper {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .category-search-wrapper input {
   width: 100%;
-  background: transparent;
-  border: 1px solid var(--aj-border);
-  border-radius: 8px;
-  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  background: var(--aj-surface-2);
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
+  padding: 0.65rem 0.75rem 0.65rem 2.4rem;
   color: var(--aj-text-main);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-family: var(--aj-serif);
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.category-search-wrapper input:focus {
+  outline: none;
+  border-color: var(--aj-primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(230, 100, 60, 0.08);
 }
 
 .category-search-wrapper svg {
   position: absolute;
-  left: 0.75rem;
+  left: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--aj-text-muted);
-  width: 18px;
-  height: 18px;
+  color: var(--aj-text-subtle);
+  width: 16px;
+  height: 16px;
 }
 
 .category-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .category-pill {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: transparent;
-  border: 1px solid var(--aj-border);
-  border-radius: 8px;
-  padding: 0.45rem 0.75rem;
-  color: var(--aj-text-main);
-  font-size: 0.85rem;
+  gap: 0.35rem;
+  background: var(--aj-surface-2);
+  border: 1.5px solid var(--aj-border);
+  border-radius: 20px;
+  padding: 0.35rem 0.7rem;
+  color: var(--aj-text-secondary);
+  font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.18s ease;
+  font-family: var(--aj-serif);
 }
 
 .category-pill:hover {
-  border-color: #999;
-  background: rgba(0, 0, 0, 0.03);
+  border-color: var(--aj-primary);
+  color: var(--aj-primary);
+  background: var(--aj-primary-light);
 }
 
 .category-pill.is-active {
-  border-color: var(--aj-text-main);
-  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--aj-primary);
+  background: var(--aj-primary-light);
+  color: var(--aj-primary-dark);
+  font-weight: 600;
 }
 
 .more-categories-btn {
   background: transparent;
   border: none;
-  color: #60a5fa;
-  font-size: 0.85rem;
+  color: var(--aj-blue);
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   padding: 0;
   margin-top: 0.5rem;
+  font-family: var(--aj-serif);
+  transition: color 0.2s;
 }
 
-/* Standard Select */
+.more-categories-btn:hover {
+  color: var(--aj-blue-dark);
+  text-decoration: underline;
+}
+
+/* ─── Standard Select ───────────────────────────────────────── */
 .filter-select {
   width: 100%;
-  background: transparent;
-  border: 1px solid var(--aj-border);
-  border-radius: 8px;
-  padding: 0.75rem;
+  background: var(--aj-surface-2);
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
+  padding: 0.65rem 0.75rem;
   color: var(--aj-text-main);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-family: var(--aj-serif);
   appearance: none;
   cursor: pointer;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--aj-primary);
+  box-shadow: 0 0 0 3px rgba(230, 100, 60, 0.08);
 }
 
 .filter-select option {
@@ -233,12 +325,12 @@
   color: var(--aj-text-main);
 }
 
-/* Range Slider */
+/* ─── Range Slider ──────────────────────────────────────────── */
 .pay-slider-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
 }
 
 .pay-slider-header h4 {
@@ -247,34 +339,40 @@
 
 .pay-value {
   font-weight: 700;
-  color: var(--aj-text-main);
-  font-size: 0.95rem;
+  color: var(--aj-primary);
+  font-size: 0.9rem;
+  background: var(--aj-primary-light);
+  padding: 0.2rem 0.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(230, 100, 60, 0.2);
 }
 
 .pay-slider {
   width: 100%;
-  accent-color: var(--aj-text-main);
+  accent-color: var(--aj-primary);
+  height: 4px;
 }
 
-/* Location / Gig Radius */
+/* ─── Location Card ─────────────────────────────────────────── */
 .location-card {
-  border: 1px solid var(--aj-border);
-  border-radius: 12px;
-  padding: 1.25rem;
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-md);
+  padding: 1rem 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
+  background: var(--aj-surface-2);
 }
 
 .location-card-header {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .location-icon-wrapper {
-  background: white;
-  border-radius: 50%;
+  background: var(--aj-primary-light);
+  border-radius: 10px;
   width: 36px;
   height: 36px;
   display: flex;
@@ -282,11 +380,12 @@
   justify-content: center;
   color: var(--aj-primary);
   flex-shrink: 0;
+  border: 1px solid rgba(230, 100, 60, 0.15);
 }
 
 .location-icon-wrapper svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .location-info {
@@ -294,184 +393,324 @@
 }
 
 .location-info h5 {
-  margin: 0 0 0.2rem 0;
+  margin: 0 0 0.15rem 0;
   color: var(--aj-text-main);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .location-info p {
   margin: 0;
   color: var(--aj-text-muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 }
 
 .location-change-btn {
   background: transparent;
-  border: 1px solid var(--aj-border);
-  border-radius: 8px;
-  color: var(--aj-text-main);
-  font-size: 0.75rem;
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
+  color: var(--aj-text-secondary);
+  font-size: 0.72rem;
   font-weight: 600;
-  padding: 0.35rem 0.6rem;
+  padding: 0.3rem 0.6rem;
   cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--aj-serif);
+}
+
+.location-change-btn:hover {
+  border-color: var(--aj-primary);
+  color: var(--aj-primary);
 }
 
 .radius-pills {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .radius-pill {
-  background: transparent;
-  border: 1px solid var(--aj-border);
-  border-radius: 8px;
-  color: var(--aj-text-main);
-  font-size: 0.85rem;
+  background: white;
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
+  color: var(--aj-text-muted);
+  font-size: 0.78rem;
   font-weight: 600;
-  padding: 0.5rem 0;
+  padding: 0.45rem 0;
   cursor: pointer;
   text-align: center;
+  transition: all 0.18s ease;
+  font-family: var(--aj-serif);
 }
 
 .radius-pill:hover {
-  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--aj-primary);
+  color: var(--aj-primary);
+  background: var(--aj-primary-light);
 }
 
 .radius-pill.is-active {
-  background: rgba(0, 0, 0, 0.08);
-  border-color: var(--aj-text-main);
+  background: var(--aj-primary);
+  border-color: var(--aj-primary);
+  color: white;
 }
 
+/* Apply Button */
 .apply-filters-btn {
-  background: var(--aj-primary);
+  background: linear-gradient(135deg, var(--aj-primary) 0%, var(--aj-primary-dark) 100%);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--aj-radius-sm);
   color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.9rem;
   width: 100%;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  font-family: var(--aj-serif);
+  letter-spacing: 0.01em;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(230, 100, 60, 0.35);
 }
 
-/* Main Content Area */
+.apply-filters-btn:hover {
+  box-shadow: 0 6px 20px rgba(230, 100, 60, 0.45);
+  transform: translateY(-1px);
+}
+
+.apply-filters-btn:active {
+  transform: translateY(0);
+}
+
+/* ─── React Select Overrides ────────────────────────────────── */
+.filter-select-react .react-select__control {
+  background: var(--aj-surface-2);
+  border: 1.5px solid var(--aj-border) !important;
+  border-radius: var(--aj-radius-sm) !important;
+  min-height: 44px;
+  box-shadow: none !important;
+  font-family: var(--aj-serif);
+  font-size: 0.85rem;
+}
+
+.filter-select-react .react-select__control--is-focused {
+  border-color: var(--aj-primary) !important;
+  box-shadow: 0 0 0 3px rgba(230, 100, 60, 0.08) !important;
+}
+
+.filter-select-react .react-select__single-value {
+  color: var(--aj-text-main);
+}
+
+.filter-select-react .react-select__menu {
+  background: var(--aj-surface);
+  border: 1px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
+  box-shadow: var(--aj-shadow-md);
+}
+
+.filter-select-react .react-select__option {
+  background: transparent;
+  color: var(--aj-text-main);
+  font-size: 0.85rem;
+}
+
+.filter-select-react .react-select__option--is-focused {
+  background: var(--aj-primary-light);
+  color: var(--aj-primary-dark);
+}
+
+.filter-select-react .react-select__option--is-selected {
+  background: var(--aj-primary);
+  color: white;
+}
+
+/* ─── Main Content Area ─────────────────────────────────────── */
 .jobs-list-main {
-  padding: 2.5rem 2rem;
+  padding: 2rem 2rem 3rem;
   min-width: 0;
 }
 
+/* ─── Filter Group h4 labels ────────────────────────── */
+.filter-group {
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--aj-border-light);
+}
+
+.filter-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filter-group h4 {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--aj-text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.filter-group h4::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--aj-primary);
+  flex-shrink: 0;
+}
+
+/* ─── Toolbar ───────────────────────────────────────────────── */
 .jobs-toolbar {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.jobs-toolbar p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--aj-text-muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .jobs-toolbar h2 {
-  font-family: var(--aj-serif);
-  font-size: 2.2rem;
+  font-size: 2rem;
   color: var(--aj-text-main);
   margin: 0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  line-height: 1.15;
 }
 
+/* ─── Active Filter Tags ──────────────────────────────── */
 .active-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
 }
 
 .active-filter-tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  background: transparent;
-  border: 1px solid var(--aj-border);
+  gap: 0.35rem;
+  background: var(--aj-primary-light);
+  border: 1.5px solid rgba(230,100,60,0.22);
   border-radius: 20px;
-  padding: 0.35rem 0.8rem;
-  color: var(--aj-text-main);
-  font-size: 0.8rem;
-  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  transition: border-color 0.15s;
 }
 
 .active-filter-tag span {
-  color: var(--aj-primary);
+  color: var(--aj-primary-dark);
+  font-weight: 700;
 }
 
 .active-filter-tag button {
   background: transparent;
   border: none;
-  color: var(--aj-text-muted);
+  color: rgba(230,100,60,0.5);
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
+  transition: color 0.15s;
 }
 
 .active-filter-tag button:hover {
-  color: #ef4444;
+  color: var(--aj-red);
 }
 
 .active-filter-tag button svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
 }
 
+/* ─── Posted Within Filter Pills ────────────────────────────── */
+.posted-within-pills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.45rem;
+}
+
+.posted-within-pill {
+  padding: 0.42rem 0.5rem;
+  border: 1.5px solid var(--aj-border);
+  border-radius: 8px;
+  background: var(--aj-surface-2);
+  color: var(--aj-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--aj-serif);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.18s ease;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.posted-within-pill:hover {
+  border-color: var(--aj-primary);
+  color: var(--aj-primary);
+  background: var(--aj-primary-light);
+}
+
+.posted-within-pill.is-active {
+  background: linear-gradient(135deg, var(--aj-primary), var(--aj-primary-dark));
+  border-color: var(--aj-primary-dark);
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(230, 100, 60, 0.3);
+}
+
+/* "Any time" spans full width */
+.posted-within-pill:first-child {
+  grid-column: 1 / -1;
+}
+
+/* ─── Job Grid ──────────────────────────────────────────────── */
 .job-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 1.1rem;
 }
 
-/* Overrides for react-select */
-.filter-select-react .react-select__control {
-  background: transparent;
-  border-color: var(--aj-border);
-  border-radius: 8px;
-  min-height: 46px;
-}
-.filter-select-react .react-select__single-value {
-  color: var(--aj-text-main);
-}
-.filter-select-react .react-select__menu {
-  background: var(--aj-surface);
-  border: 1px solid var(--aj-border);
-}
-.filter-select-react .react-select__option {
-  background: transparent;
-  color: var(--aj-text-main);
-}
-.filter-select-react .react-select__option--is-focused {
-  background: rgba(0, 0, 0, 0.04);
-}
-
-/* Loading/Error */
+/* ─── Loading / Error / Empty States ───────────────────────── */
 .jobs-error-message,
 .jobs-loading-message,
 .no-jobs-message {
   grid-column: 1 / -1;
-  padding: 1.5rem;
-  border: 1px solid var(--aj-border);
-  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-lg);
   background: var(--aj-surface);
   color: var(--aj-text-muted);
   text-align: center;
+  font-size: 0.95rem;
+  box-shadow: var(--aj-shadow-sm);
 }
 
 .jobs-error-message {
-  color: #fca5a5;
-  border-color: #7f1d1d;
-  background: rgba(127, 29, 29, 0.2);
+  color: #b91c1c;
+  border-color: #fecaca;
+  background: #fff5f5;
 }
 
-/* Pagination */
+/* ─── Pagination ────────────────────────────────────────────── */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   margin-top: 3rem;
 }
 
@@ -479,32 +718,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--aj-border);
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
   background: var(--aj-surface);
-  color: var(--aj-text-main);
+  color: var(--aj-text-secondary);
   font-weight: 600;
+  font-size: 0.88rem;
   cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: var(--aj-serif);
+  box-shadow: var(--aj-shadow-sm);
 }
 
 .page-btn:hover:not(:disabled) {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: #999;
+  border-color: var(--aj-primary);
+  color: var(--aj-primary);
+  background: var(--aj-primary-light);
+  transform: translateY(-1px);
+  box-shadow: var(--aj-shadow-md);
 }
 
 .page-btn.active {
-  background: var(--aj-primary);
+  background: linear-gradient(135deg, var(--aj-primary), var(--aj-primary-dark));
   color: white;
   border-color: var(--aj-primary);
+  box-shadow: 0 4px 12px rgba(230, 100, 60, 0.35);
 }
 
 .page-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
+/* ─── Responsive ────────────────────────────────────────────── */
 @media (max-width: 1080px) {
   .all-jobs-content {
     grid-template-columns: 1fr;
@@ -512,10 +761,185 @@
   .filters-sidebar {
     position: static;
     height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--aj-border);
   }
 }
+
 @media (max-width: 760px) {
   .job-grid {
     grid-template-columns: 1fr;
   }
+  .jobs-list-main {
+    padding: 1.25rem 1rem 2rem;
+  }
+}
+
+/* ─── React Select — Location Filter Overrides ──────────────── */
+
+/* Wrapper spacing between each select */
+.filter-select-react {
+  margin-bottom: 0.6rem;
+}
+.filter-select-react:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Control (the visible input box) */
+.filter-select-react .react-select__control {
+  background: var(--aj-surface-2);
+  border: 1.5px solid var(--aj-border) !important;
+  border-radius: 10px !important;
+  min-height: 44px !important;
+  box-shadow: none !important;
+  font-family: var(--aj-serif);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.filter-select-react .react-select__control:hover {
+  border-color: #b0bec5 !important;
+  background: #fff;
+}
+
+.filter-select-react .react-select__control--is-focused {
+  border-color: var(--aj-primary) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 3px rgba(230, 100, 60, 0.1) !important;
+}
+
+/* Disabled state */
+.filter-select-react .react-select__control--is-disabled {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Placeholder text */
+.filter-select-react .react-select__placeholder {
+  color: var(--aj-text-subtle);
+  font-size: 0.84rem;
+  font-weight: 400;
+}
+
+/* Selected value text */
+.filter-select-react .react-select__single-value {
+  color: var(--aj-text-main);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Input cursor */
+.filter-select-react .react-select__input-container {
+  color: var(--aj-text-main);
+  font-size: 0.85rem;
+}
+
+/* Dropdown indicator (arrow) */
+.filter-select-react .react-select__indicator-separator {
+  background-color: var(--aj-border);
+}
+
+.filter-select-react .react-select__dropdown-indicator {
+  color: var(--aj-text-subtle);
+  padding: 6px 10px;
+  transition: color 0.18s;
+}
+
+.filter-select-react .react-select__control:hover .react-select__dropdown-indicator,
+.filter-select-react .react-select__control--is-focused .react-select__dropdown-indicator {
+  color: var(--aj-primary);
+}
+
+/* Clear (×) button */
+.filter-select-react .react-select__clear-indicator {
+  color: var(--aj-text-subtle);
+  padding: 6px 4px;
+  transition: color 0.18s;
+}
+.filter-select-react .react-select__clear-indicator:hover {
+  color: var(--aj-red);
+}
+
+/* Dropdown menu panel */
+.filter-select-react .react-select__menu {
+  background: #ffffff;
+  border: 1.5px solid var(--aj-border);
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.05);
+  z-index: 100;
+  overflow: hidden;
+  margin-top: 4px;
+  font-family: var(--aj-serif);
+}
+
+.filter-select-react .react-select__menu-list {
+  padding: 6px;
+  max-height: 220px;
+}
+
+/* Individual option */
+.filter-select-react .react-select__option {
+  background: transparent;
+  color: var(--aj-text-secondary);
+  font-size: 0.84rem;
+  font-weight: 500;
+  border-radius: 7px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.filter-select-react .react-select__option--is-focused {
+  background: var(--aj-primary-light);
+  color: var(--aj-primary-dark);
+}
+
+.filter-select-react .react-select__option--is-selected {
+  background: linear-gradient(135deg, var(--aj-primary), var(--aj-primary-dark));
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.filter-select-react .react-select__option--is-selected:hover {
+  background: var(--aj-primary-dark);
+}
+
+/* No options message */
+.filter-select-react .react-select__menu-notice {
+  color: var(--aj-text-muted);
+  font-size: 0.82rem;
+  padding: 0.75rem;
+}
+
+/* Location filter group — label with globe icon feel */
+.filter-group h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Location selects stacked with separator lines */
+.filter-group .filter-select-react + .filter-select-react {
+  position: relative;
+}
+
+.filter-group .filter-select-react + .filter-select-react::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--aj-border-light);
+  margin-bottom: 0.6rem;
+}
+
+/* Loading indicator inside select */
+.filter-select-react .react-select__loading-indicator {
+  color: var(--aj-primary);
+}
+
+/* Value container padding */
+.filter-select-react .react-select__value-container {
+  padding: 2px 10px;
 }

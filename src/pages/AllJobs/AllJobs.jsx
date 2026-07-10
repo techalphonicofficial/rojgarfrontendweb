@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import JobCard from '../../components/JobCard/JobCard';
-import { apiRequest, authApiRequest, optionalAuthApiRequest, resolveAssetUrl } from '../../api';
+import ApplyModal from '../../components/ApplyModal/ApplyModal';
+import { apiRequest, authApiRequest, optionalAuthApiRequest, resolveAssetUrl, applyJob, applyGigJob } from '../../api';
 import { useAuth } from '../../context/auth-state';
 import './AllJobs.css';
 
@@ -199,6 +200,7 @@ const AllJobs = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [nearbyGigOnly, setNearbyGigOnly] = useState(false);
   const [minimumPay, setMinimumPay] = useState(0);
+  const [postedWithin, setPostedWithin] = useState('');
   const [categorySearch, setCategorySearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [jobs, setJobs] = useState([]);
@@ -219,6 +221,7 @@ const AllJobs = () => {
   const [error, setError] = useState('');
   const [savingJobKeys, setSavingJobKeys] = useState([]);
   const [applyingJobKeys, setApplyingJobKeys] = useState([]);
+  const [applyTarget, setApplyTarget] = useState(null); // job to open modal for
 
   useEffect(() => {
     let ignore = false;
@@ -340,7 +343,8 @@ const AllJobs = () => {
         city_id: selectedCity,
         latitude: userLocation?.latitude,
         longitude: userLocation?.longitude,
-        min_salary: minimumPay > 0 ? minimumPay : undefined
+        min_salary: minimumPay > 0 ? minimumPay : undefined,
+        posted_within: postedWithin || undefined
       };
 
       const normalQuery = buildQueryString({
@@ -425,7 +429,8 @@ const AllJobs = () => {
     selectedJobType,
     selectedState,
     userLocation,
-    minimumPay
+    minimumPay,
+    postedWithin
   ]);
 
   const lookupName = (items, selectedId) => items.find((item) => String(item.id) === String(selectedId))?.name || '';
@@ -455,7 +460,11 @@ const AllJobs = () => {
       });
     }
     if (minimumPay > 0) {
-      filters.push({ key: 'minPay', label: `Min ₹${formatNumber(minimumPay)}` });
+      filters.push({ key: 'minPay', label: `Min ${formatNumber(minimumPay)}/mo` });
+    }
+    if (postedWithin) {
+      const postedLabels = { '1': 'Last 24 hours', '3': 'Last 3 days', '7': 'Last 7 days', '30': 'Last 30 days' };
+      filters.push({ key: 'postedWithin', label: postedLabels[postedWithin] || `Posted within ${postedWithin}d` });
     }
 
     return filters;
@@ -476,7 +485,9 @@ const AllJobs = () => {
     selectedCountry,
     selectedJobType,
     selectedState,
-    userLocation
+    userLocation,
+    minimumPay,
+    postedWithin
   ]);
 
   const resultCopy = loading
@@ -505,6 +516,7 @@ const AllJobs = () => {
     setUserLocation(null);
     setNearbyGigOnly(false);
     setMinimumPay(0);
+    setPostedWithin('');
     setCategorySearch('');
     setLookups((current) => ({ ...current, states: [], cities: [] }));
     setSearchParams({});
@@ -626,40 +638,46 @@ const AllJobs = () => {
     }
   };
 
-  const handleApply = async (job) => {
+  // Open the apply modal (instead of directly calling API)
+  // JobCard calls onApply(job.id, job.source) — two separate args
+  const handleApply = (jobId, jobSource) => {
     if (!isAuthenticated) {
       setError('Please login as a job seeker to apply.');
       return;
     }
+    // Find the full job object from the jobs list
+    const job = jobs.find((j) => j.id === jobId && j.source === jobSource);
+    if (!job || job.appliedStatus) return;
+    setApplyTarget(job);
+  };
 
-    if (job.appliedStatus) return;
+  // Called when user submits the modal form
+  const handleApplySubmit = async ({ cover_letter, proposed_amount }) => {
+    const job = applyTarget;
+    if (!job) return;
 
     const jobKey = job.key || `${job.source}-${job.id}`;
     setApplyingJobKeys((current) => [...current, jobKey]);
     setError('');
 
     try {
-      const endpoint = job.source === 'gig'
-        ? `/api/gig-jobs/${job.id}/apply`
-        : `/api/jobs/${job.id}/apply`;
-      const options = job.source === 'gig'
-        ? { method: 'POST' }
-        : {
-          method: 'POST',
-          body: JSON.stringify({ cover_letter: 'I am interested in this role.' })
-        };
-
-      await authApiRequest(endpoint, options);
-      setJobs((current) => current.map((item) => (
+      if (job.source === 'gig') {
+        await applyGigJob(job.id, { cover_letter });
+      } else {
+        await applyJob(job.id, { cover_letter, proposed_amount });
+      }
+      setJobs((current) => current.map((item) =>
         item.key === jobKey ? { ...item, appliedStatus: 'applied' } : item
-      )));
+      ));
+      setApplyTarget(null); // close modal on success
     } catch (applyError) {
       if (/already applied/i.test(applyError.message)) {
-        setJobs((current) => current.map((item) => (
+        setJobs((current) => current.map((item) =>
           item.key === jobKey ? { ...item, appliedStatus: 'applied' } : item
-        )));
+        ));
+        setApplyTarget(null);
       } else {
-        setError(applyError.message);
+        throw applyError; // re-throw so modal shows the error
       }
     } finally {
       setApplyingJobKeys((current) => current.filter((key) => key !== jobKey));
@@ -819,7 +837,7 @@ const AllJobs = () => {
             <div className="pay-slider-header">
               <h4>Minimum pay</h4>
               <span className="pay-value">
-                {minimumPay > 0 ? `₹${formatNumber(minimumPay)}` : 'Any'}
+                {minimumPay > 0 ? formatNumber(minimumPay) : 'Any'}
               </span>
             </div>
             <input
@@ -865,6 +883,28 @@ const AllJobs = () => {
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+
+          <div className="filter-group">
+            <h4>Posted Within</h4>
+            <div className="posted-within-pills">
+              {[
+                ['', 'Any time'],
+                ['1', 'Last 24h'],
+                ['3', 'Last 3 days'],
+                ['7', 'Last 7 days'],
+                ['30', 'Last 30 days'],
+              ].map(([value, label]) => (
+                <button
+                  key={value || 'any'}
+                  type="button"
+                  className={`posted-within-pill${postedWithin === value ? ' is-active' : ''}`}
+                  onClick={() => updatePageOne(() => setPostedWithin(value))}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -947,6 +987,7 @@ const AllJobs = () => {
                       else if (filter.key === 'state') setSelectedState('');
                       else if (filter.key === 'city') setSelectedCity('');
                       else if (filter.key === 'minPay') setMinimumPay(0);
+                      else if (filter.key === 'postedWithin') setPostedWithin('');
                       else if (filter.key === 'nearbyGig' || filter.key === 'locationCoords') clearCurrentLocation();
                       else if (filter.key === 'source') setFilterType('all');
                       setCurrentPage(1);
@@ -1020,6 +1061,15 @@ const AllJobs = () => {
           )}
         </main>
       </div>
+
+      {/* Apply Modal */}
+      {applyTarget && (
+        <ApplyModal
+          job={applyTarget}
+          onClose={() => setApplyTarget(null)}
+          onSubmit={handleApplySubmit}
+        />
+      )}
     </div>
   );
 };

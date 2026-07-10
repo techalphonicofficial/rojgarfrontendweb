@@ -1,50 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* ─── Job Card ──────────────────────────────────────────────── */
 .job-card-simple {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1rem;
+  border: 1.5px solid #e8edf5;
+  border-radius: 16px;
+  padding: 1.35rem 1.4rem 1.15rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  gap: 0.9rem;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.22s ease;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 2px 8px rgba(15, 23, 42, 0.05),
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Top accent bar — hidden by default, revealed on hover */
+.job-card-simple::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #e6643c, #f59e0b);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  border-radius: 16px 16px 0 0;
 }
 
 .job-card-simple:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  border-color: #d1d5db;
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.1),
+    0 4px 8px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  border-color: #c8d5e8;
+  transform: translateY(-3px);
 }
 
+.job-card-simple:hover::before {
+  opacity: 1;
+}
+
+/* ─── Gig card accent ───────────────────────────────────────── */
+.job-card-simple.is-gig {
+  border-color: rgba(245, 158, 11, 0.22);
+  background: linear-gradient(160deg, #fffdf7 0%, #ffffff 100%);
+}
+
+.job-card-simple.is-gig::before {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+}
+
+.job-card-simple.is-gig:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+/* ─── Card Header ───────────────────────────────────────────── */
 .jc-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .jc-title-wrap {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
 }
 
 .jc-title {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 500; /* Not bold */
-  margin: 0 0 0.25rem 0;
+  font-size: 0.98rem;
+  font-weight: 800;
+  margin: 0;
   line-height: 1.3;
+  letter-spacing: -0.015em;
 }
 
 .jc-title a {
-  color: #111827;
+  color: #0f172a;
   text-decoration: none;
+  transition: color 0.18s;
 }
 
 .jc-title a:hover {
-  text-decoration: underline;
-  color: #2563eb;
+  color: #e6643c;
 }
 
+/* ─── Company Info ──────────────────────────────────────────── */
 .jc-company-info {
   display: flex;
   flex-direction: column;
@@ -52,40 +104,65 @@
 }
 
 .jc-company {
-  font-size: 0.85rem;
-  color: #4b5563;
+  font-size: 0.8rem;
+  color: #e6643c;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .jc-location {
-  font-size: 0.85rem;
-  color: #6b7280;
+  font-size: 0.76rem;
+  color: #64748b;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
 }
 
+.jc-location::before {
+  content: '📍';
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+/* ─── Save Button ───────────────────────────────────────────── */
 .jc-save-btn {
-  background: none;
-  border: none;
+  background: #f8fafc;
+  border: 1.5px solid #e8edf5;
+  border-radius: 10px;
   cursor: pointer;
-  color: #9ca3af;
-  padding: 0.25rem;
+  color: #94a3b8;
+  padding: 0.42rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
 }
 
 .jc-save-btn:hover {
-  color: #4b5563;
+  background: #fff7ed;
+  border-color: #fdba74;
+  color: #e6643c;
+  transform: scale(1.08);
 }
 
 .jc-save-btn.is-saved {
-  color: #2563eb;
+  background: #fff7ed;
+  border-color: #e6643c;
+  color: #e6643c;
 }
 
 .jc-save-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
 }
 
+/* ─── Body / Tags ───────────────────────────────────────────── */
 .jc-body {
   display: flex;
   flex-direction: column;
@@ -95,85 +172,142 @@
 .jc-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  align-items: center;
 }
 
+/* Salary Tag — green */
 .jc-salary-tag {
-  background: #f0fdf4;
-  color: #166534;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  color: #15803d;
+  padding: 0.28rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  border: 1px solid rgba(21, 128, 61, 0.18);
+  letter-spacing: 0.01em;
 }
 
 .jc-salary-tag svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
 }
 
+/* Meta Tag (experience, type, etc.) */
 .jc-meta-tag {
-  background: #f3f4f6;
-  color: #4b5563;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.jc-meta-tag svg {
-  width: 14px;
-  height: 14px;
-}
-
-.jc-urgent-text {
-  color: #dc2626;
-  font-size: 0.8rem;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 0.26rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  border: 1px solid #e2e8f0;
+  transition: background 0.15s;
+}
+
+.jc-meta-tag svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* Urgent Hiring Badge */
+.jc-urgent-text {
+  color: #dc2626;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: linear-gradient(135deg, #fff5f5, #fee2e2);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  width: fit-content;
+  animation: urgentPulse 2s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
 }
 
 .jc-urgent-text::before {
   content: '🔥';
+  font-size: 0.8em;
 }
 
+/* ─── Footer ────────────────────────────────────────────────── */
 .jc-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.25rem;
+  margin-top: 0.1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid #f1f5f9;
 }
 
 .jc-posted {
-  font-size: 0.75rem;
-  color: #9ca3af;
+  font-size: 0.71rem;
+  color: #94a3b8;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
 }
 
+.jc-posted::before {
+  content: '🕐';
+  font-size: 0.7rem;
+}
+
+/* ─── Apply Button — Brand Orange ───────────────────────────── */
 .jc-apply-btn {
-  background: #2563eb;
+  background: linear-gradient(135deg, #e6643c, #c94e27);
   color: #ffffff;
-  padding: 0.4rem 1.25rem;
+  padding: 0.44rem 1.25rem;
   border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.02em;
+  font-family: 'Inter', system-ui, sans-serif;
+  box-shadow: 0 3px 12px rgba(230, 100, 60, 0.35);
 }
 
 .jc-apply-btn:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: linear-gradient(135deg, #c94e27, #a33d1e);
+  box-shadow: 0 6px 18px rgba(230, 100, 60, 0.45);
+  transform: translateY(-2px);
 }
 
+.jc-apply-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(230, 100, 60, 0.3);
+}
+
+/* Applied / disabled state */
+.jc-apply-btn.is-applied,
 .jc-apply-btn:disabled {
-  opacity: 0.6;
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+  box-shadow: none;
   cursor: not-allowed;
-  background: #9ca3af;
+  transform: none;
+  opacity: 0.75;
+  letter-spacing: 0;
+}
+
+.jc-apply-btn.is-applied {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(22,163,74,0.25);
 }

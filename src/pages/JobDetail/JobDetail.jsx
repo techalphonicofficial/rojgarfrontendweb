@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
-import { apiRequest, authApiRequest } from '../../api';
+import { apiRequest, authApiRequest, applyJob, applyGigJob } from '../../api';
 import { useAuth } from '../../context/auth-state';
+import ApplyModal from '../../components/ApplyModal/ApplyModal';
 import './JobDetail.css';
 
 const cleanDisplayValue = (value) => {
@@ -258,6 +259,7 @@ const JobDetail = () => {
   const [error, setError] = useState('');
   const [applyMessage, setApplyMessage] = useState('');
   const [applying, setApplying] = useState(false);
+  const [showApplyModal, setShowApplyModal] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -316,32 +318,35 @@ const JobDetail = () => {
     return `/jobs${params}`;
   }, [source]);
 
-  const handleApply = async () => {
+  // Opens the modal
+  const handleApply = () => {
     if (!isAuthenticated) {
       setApplyMessage('Please login as a job seeker to apply.');
       return;
     }
+    setShowApplyModal(true);
+  };
 
+  // Called when modal form is submitted
+  const handleApplySubmit = async ({ cover_letter, proposed_amount }) => {
     setApplying(true);
     setApplyMessage('');
 
     try {
-      const endpoint = source === 'gig' ? `/api/gig-jobs/${id}/apply` : `/api/jobs/${id}/apply`;
-      const options = source === 'gig'
-        ? { method: 'POST' }
-        : {
-          method: 'POST',
-          body: JSON.stringify({ cover_letter: 'I am interested in this role.' })
-        };
-
-      await authApiRequest(endpoint, options);
+      if (source === 'gig') {
+        await applyGigJob(id, { cover_letter });
+      } else {
+        await applyJob(id, { cover_letter, proposed_amount });
+      }
       setJob((current) => current ? { ...current, appliedStatus: 'applied' } : current);
-      setApplyMessage('Application submitted successfully.');
+      setApplyMessage('Application submitted successfully! 🎉');
+      setShowApplyModal(false);
     } catch (applyError) {
       if (/already applied/i.test(applyError.message)) {
         setJob((current) => current ? { ...current, appliedStatus: 'applied' } : current);
+        setShowApplyModal(false);
       }
-      setApplyMessage(applyError.message);
+      throw applyError; // let modal show the error
     } finally {
       setApplying(false);
     }
@@ -478,6 +483,15 @@ const JobDetail = () => {
           )}
         </aside>
       </div>
+
+      {/* Apply Modal */}
+      {showApplyModal && job && (
+        <ApplyModal
+          job={{ id: job.id, title: job.title, company: job.company, source }}
+          onClose={() => setShowApplyModal(false)}
+          onSubmit={handleApplySubmit}
+        />
+      )}
     </div>
   );
 };

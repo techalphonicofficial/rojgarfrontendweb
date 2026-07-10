@@ -13,20 +13,5 @@ export default defineConfig({
     allowedHosts: [
       'writes-micro-accompanied-manufacturing.trycloudflare.com'
     ],
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:3006',
-        changeOrigin: true,
-      },
-      '/uploads': {
-        target: 'http://127.0.0.1:3006',
-        changeOrigin: true,
-      },
-      '/socket.io': {
-        target: 'http://127.0.0.1:3006',
-        changeOrigin: true,
-        ws: true,
-      },
-    },
   },
 })

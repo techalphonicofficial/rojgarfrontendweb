@@ -254,3 +254,29 @@ export function markAllNotificationsRead() {
     method: 'PATCH',
   });
 }
+
+/**
+ * Apply to a normal job.
+ * POST /api/jobs/:id/apply
+ */
+export function applyJob(jobId, { cover_letter = '', proposed_amount } = {}) {
+  const body = { cover_letter };
+  if (proposed_amount !== undefined && proposed_amount !== '' && !Number.isNaN(Number(proposed_amount))) {
+    body.proposed_amount = Number(proposed_amount);
+  }
+  return authApiRequest(`/api/jobs/${jobId}/apply`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+/**
+ * Apply to a gig job.
+ * POST /api/gig-jobs/:id/apply
+ */
+export function applyGigJob(gigJobId, { cover_letter = '' } = {}) {
+  return authApiRequest(`/api/gig-jobs/${gigJobId}/apply`, {
+    method: 'POST',
+    body: JSON.stringify({ cover_letter }),
+  });
+}

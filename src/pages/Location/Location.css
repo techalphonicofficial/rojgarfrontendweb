@@ -1,89 +1,180 @@
 /* src/pages/Location/Location.css */
 
 .location-picker {
-  max-width: 800px;
+  max-width: 680px;
   width: calc(100% - 3rem);
-  margin: 7rem auto 3rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 9rem auto 4rem;
+  padding: 3rem 2.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(226, 232, 240, 0.8);
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 30px -10px rgba(15, 23, 42, 0.1),
+    0 1px 3px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .location-picker .section-title {
-  font-size: 1.8rem;
-  margin-bottom: 0.35rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
   text-align: center;
-  color: #2c3e50;
+  color: #0f172a;
+  letter-spacing: -0.02em;
 }
 
 .location-picker .location-helper {
-  margin-bottom: 1.25rem;
-  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  color: #64748b;
   text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Base forms styling */
+.location-picker form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .location-picker .select-group {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .location-picker .select-label {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  font-weight: 500;
-  color: #34495e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .location-picker .styled-select {
-  margin-top: 0.4rem;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid #dcdfe6;
-  border-radius: 6px;
-  background: #fff;
-  font-size: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.85rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #1e293b;
   width: 100%;
   min-width: 0;
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .location-picker .styled-select:focus {
-  border-color: #5c9ded;
-  box-shadow: 0 0 0 3px rgba(92, 157, 237, 0.2);
+  border-color: #e6643c;
+  box-shadow: 0 0 0 3px rgba(230, 100, 60, 0.12);
+  background: #ffffff;
+}
+
+.location-picker .styled-select:disabled {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
 }
 
 .location-picker .location-actions {
   display: flex;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
-.location-picker .location-actions .btn-primary {
-  min-width: 140px;
+/* Global buttons within Location Picker */
+.location-picker .btn-primary,
+.location-picker .employer-primary-btn {
+  min-height: 46px;
+  background: linear-gradient(135deg, #e6643c, #c94e27);
+  color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(230, 100, 60, 0.35);
+  transition: all 0.2s ease;
+  padding: 0.5rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.location-picker .location-actions .btn-primary:disabled {
+.location-picker .btn-primary:hover:not(:disabled),
+.location-picker .employer-primary-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c94e27, #a33d1e);
+  box-shadow: 0 6px 20px rgba(230, 100, 60, 0.45);
+  transform: translateY(-1px);
+}
+
+.location-picker .btn-primary:active:not(:disabled),
+.location-picker .employer-primary-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.location-picker .btn-primary:disabled,
+.location-picker .employer-primary-btn:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
-  transform: none;
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
   box-shadow: none;
+  opacity: 0.8;
+  transform: none;
+}
+
+/* Geo-coordinate finders layout */
+.location-picker .search-by-name {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.location-picker .search-by-name .styled-select {
+  margin-top: 0;
+  flex: 1;
+}
+
+.location-picker .search-by-name .employer-primary-btn {
+  white-space: nowrap;
+  height: 44px;
+  min-height: auto;
 }
 
 @media (max-width: 640px) {
   .location-picker {
     width: calc(100% - 2rem);
-    margin-top: 6.5rem;
-    padding: 1.25rem;
+    margin-top: 7.5rem;
+    padding: 2rem 1.5rem;
   }
 
   .location-picker .section-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .location-picker .select-group {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .location-picker .search-by-name {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
+
+

@@ -1254,15 +1254,6 @@ const JobSeekerDashboard = ({ defaultTab = 'overview' }) => {
           {activeTab === 'messages' && (
             <section className="dashboard-section dashboard-message-layout">
               <aside className="dashboard-chat-sidebar">
-                <div className="dashboard-start-chat">
-                  <input
-                    type="number"
-                    placeholder="User id"
-                    value={newChatUserId}
-                    onChange={(event) => setNewChatUserId(event.target.value)}
-                  />
-                  <button type="button" onClick={startChat}>Start</button>
-                </div>
                 <ChatList chats={chats} onSelect={loadMessages} activeChat={activeChat} />
               </aside>
               <div className="dashboard-chat-window">
