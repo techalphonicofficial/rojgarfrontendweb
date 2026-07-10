@@ -201,6 +201,8 @@ const AllJobs = () => {
   const [nearbyGigOnly, setNearbyGigOnly] = useState(false);
   const [minimumPay, setMinimumPay] = useState(0);
   const [postedWithin, setPostedWithin] = useState('');
+  const [gigStartTime, setGigStartTime] = useState('');
+  const [gigEndTime, setGigEndTime] = useState('');
   const [categorySearch, setCategorySearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [jobs, setJobs] = useState([]);
@@ -817,21 +819,56 @@ const AllJobs = () => {
             )}
           </div>
 
-          <div className="filter-group">
-            <h4>Employment Type</h4>
-            <select
-              className="filter-select"
-              value={selectedJobType}
-              onChange={(event) => updatePageOne(() => setSelectedJobType(event.target.value))}
-              disabled={filterType === 'gig'}
-            >
-              <option value="">All Types</option>
-              {lookups.jobTypes.map((type) => (
-                <option key={type.id || type.code} value={type.code}>{type.name}</option>
-              ))}
-            </select>
-            {filterType === 'gig' && <p className="filter-help">Employment type applies to normal jobs.</p>}
-          </div>
+          {filterType !== 'gig' && (
+            <div className="filter-group">
+              <h4>Employment Type</h4>
+              <select
+                className="filter-select"
+                value={selectedJobType}
+                onChange={(event) => updatePageOne(() => setSelectedJobType(event.target.value))}
+              >
+                <option value="">All Types</option>
+                {lookups.jobTypes.map((type) => (
+                  <option key={type.id || type.code} value={type.code}>{type.name}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {filterType === 'gig' && (
+            <div className="filter-group">
+              <h4>Shift Timing</h4>
+              <div className="gig-time-pickers">
+                <label className="gig-time-label">
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Start Time
+                  </span>
+                  <input
+                    type="time"
+                    className="gig-time-input"
+                    value={gigStartTime}
+                    onChange={(e) => setGigStartTime(e.target.value)}
+                  />
+                </label>
+                <label className="gig-time-label">
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    End Time
+                  </span>
+                  <input
+                    type="time"
+                    className="gig-time-input"
+                    value={gigEndTime}
+                    onChange={(e) => setGigEndTime(e.target.value)}
+                  />
+                </label>
+              </div>
+              {gigStartTime && gigEndTime && gigStartTime >= gigEndTime && (
+                <p className="filter-help" style={{ color: '#dc2626' }}>End time must be after start time.</p>
+              )}
+            </div>
+          )}
 
           <div className="filter-group">
             <div className="pay-slider-header">

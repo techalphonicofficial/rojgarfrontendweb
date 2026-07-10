@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import Select from 'react-select';
 import { API_BASE_URL, apiRequest, resolveAssetUrl, storeAuthSession } from '../../api';
 
 const profileFields = [

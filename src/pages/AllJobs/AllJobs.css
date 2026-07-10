@@ -455,6 +455,58 @@
   color: white;
 }
 
+/* ─── Gig Shift Timing Pickers ────────────────────────────── */
+.gig-time-pickers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gig-time-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gig-time-label > span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--aj-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gig-time-label > span svg {
+  color: var(--aj-primary);
+  flex-shrink: 0;
+}
+
+.gig-time-input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--aj-border);
+  border-radius: var(--aj-radius-sm);
+  background: var(--aj-surface);
+  color: var(--aj-text-main);
+  font-family: var(--aj-serif);
+  font-size: 0.88rem;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.gig-time-input:focus {
+  border-color: var(--aj-primary);
+  box-shadow: 0 0 0 3px rgba(230, 100, 60, 0.1);
+  background: white;
+}
+
+
 /* Apply Button */
 .apply-filters-btn {
   background: linear-gradient(135deg, var(--aj-primary) 0%, var(--aj-primary-dark) 100%);

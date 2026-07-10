@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Component } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -36,6 +36,35 @@ const ScrollToTop = () => {
   return null;
 };
 
+class RouteErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '3rem 2rem', maxWidth: 600, margin: '4rem auto', fontFamily: 'sans-serif' }}>
+          <h2 style={{ color: '#b42318', marginBottom: '0.5rem' }}>Something went wrong</h2>
+          <p style={{ color: '#667085', marginBottom: '1.5rem' }}>
+            {this.state.error?.message || 'An unexpected error occurred on this page.'}
+          </p>
+          <button
+            onClick={() => { this.setState({ hasError: false, error: null }); window.history.back(); }}
+            style={{ background: '#cf5b2c', color: '#fff', border: 'none', borderRadius: 8, padding: '0.65rem 1.25rem', cursor: 'pointer', fontWeight: 700 }}
+          >
+            Go back
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function App() {
   return (
     <Router>
@@ -62,10 +91,10 @@ function App() {
                 <Route path="overview" element={<Overview />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="jobs" element={<Jobs />} />
-                <Route path="jobs/new" element={<CreateJob />} />
-                <Route path="jobs/:id/edit" element={<CreateJob />} />
-                <Route path="gigs/new" element={<CreateGigJob />} />
-                <Route path="gigs/:id/edit" element={<CreateGigJob />} />
+                <Route path="jobs/new" element={<RouteErrorBoundary><CreateJob /></RouteErrorBoundary>} />
+                <Route path="jobs/:id/edit" element={<RouteErrorBoundary><CreateJob /></RouteErrorBoundary>} />
+                <Route path="gigs/new" element={<RouteErrorBoundary><CreateGigJob /></RouteErrorBoundary>} />
+                <Route path="gigs/:id/edit" element={<RouteErrorBoundary><CreateGigJob /></RouteErrorBoundary>} />
                 <Route path="applicants" element={<Applicants />} />
               </Route>
               <Route path="/employer/dashboard/*" element={<EmployerDashboardLayout />}>
@@ -73,10 +102,10 @@ function App() {
                 <Route path="overview" element={<Overview />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="jobs" element={<Jobs />} />
-                <Route path="jobs/new" element={<CreateJob />} />
-                <Route path="jobs/:id/edit" element={<CreateJob />} />
-                <Route path="gigs/new" element={<CreateGigJob />} />
-                <Route path="gigs/:id/edit" element={<CreateGigJob />} />
+                <Route path="jobs/new" element={<RouteErrorBoundary><CreateJob /></RouteErrorBoundary>} />
+                <Route path="jobs/:id/edit" element={<RouteErrorBoundary><CreateJob /></RouteErrorBoundary>} />
+                <Route path="gigs/new" element={<RouteErrorBoundary><CreateGigJob /></RouteErrorBoundary>} />
+                <Route path="gigs/:id/edit" element={<RouteErrorBoundary><CreateGigJob /></RouteErrorBoundary>} />
                 <Route path="applicants" element={<Applicants />} />
               </Route>
               <Route path="/job-seeker/dashboard" element={<JobSeekerDashboard key="job-seeker-dashboard" />} />

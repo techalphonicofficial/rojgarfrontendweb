@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, Suspense, lazy } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import AsyncSelect from 'react-select/async';
 
 import { authApiRequest, createGigJob, updateGigJob } from '../../api';
 import styles from './createJob.module.css';
+
+const ReactQuill = lazy(() => import('react-quill-new'));
 
 const initialGigForm = {
   title: '',
@@ -199,7 +200,7 @@ const CreateGigJob = () => {
       authApiRequest('/api/locations/countries?limit=300'),
     ];
 
-    if (isEditing) requests.push(authApiRequest(`/api/gig-jobs/${gigJobId}`));
+    if (isEditing) requests.push(authApiRequest(`/api/gig-jobs/employer/${gigJobId}`).catch(() => authApiRequest(`/api/gig-jobs/${gigJobId}`)));
 
     Promise.all(requests)
       .then(([masterData, countryData, gigJobData]) => {
@@ -472,7 +473,9 @@ const CreateGigJob = () => {
               <label className={styles.isFull}>
                 <span>Description *</span>
                 <div className={styles.quillContainer}>
-                  <ReactQuill theme="snow" value={form.description || ''} onChange={(content) => updateField('description', content)} placeholder="Describe the work, responsibilities, and expectations." />
+                  <Suspense fallback={<textarea value={form.description || ''} onChange={(e) => updateField('description', e.target.value)} placeholder="Describe the work, responsibilities, and expectations." />}>
+                    <ReactQuill theme="snow" value={form.description || ''} onChange={(content) => updateField('description', content)} placeholder="Describe the work, responsibilities, and expectations." />
+                  </Suspense>
                 </div>
               </label>
             </div>
