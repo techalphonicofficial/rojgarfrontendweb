@@ -1089,58 +1089,72 @@
 
 .employer-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
   justify-content: flex-end;
 }
 
 .employer-actions button {
-  border: 1px solid transparent;
-  border-radius: 8px;
+  border: none;
+  border-radius: 20px;
   cursor: pointer;
   font: inherit;
-  font-size: 0.7rem;
-  font-weight: 800;
+  font-size: 0.75rem;
+  font-weight: 700;
   min-height: 34px;
-  padding: 0.45rem 0.65rem;
+  padding: 0.45rem 0.85rem;
+  transition: all 0.2s ease;
 }
 
 .employer-actions .shortlist-btn {
-  background: #ecfdf3;
-  border-color: #abefc6;
-  color: #067647;
+  background: #f0fdf4;
+  color: #15803d;
+}
+.employer-actions .shortlist-btn:hover:not(:disabled) {
+  background: #dcfce7;
 }
 
 .employer-actions .offer-btn,
 .employer-candidate-footer .offer-btn {
-  background: #fffaeb;
-  border-color: #fedf89;
-  color: #b54708;
+  background: #fefce8;
+  color: #a16207;
+}
+.employer-actions .offer-btn:hover:not(:disabled),
+.employer-candidate-footer .offer-btn:hover:not(:disabled) {
+  background: #fef08a;
 }
 
 .employer-actions .details-btn,
 .employer-candidate-footer a {
-  background: #fff;
-  border-color: #d0d5dd;
-  color: #344054;
+  background: #f1f5f9;
+  color: #475569;
+}
+.employer-actions .details-btn:hover:not(:disabled),
+.employer-candidate-footer a:hover {
+  background: #e2e8f0;
 }
 
 .employer-actions .chat-btn,
 .employer-candidate-footer .chat-btn {
-  background: #eff8ff;
-  border-color: #b2ddff;
-  color: #175cd3;
+  background: #f0f9ff;
+  color: #0369a1;
+}
+.employer-actions .chat-btn:hover:not(:disabled),
+.employer-candidate-footer .chat-btn:hover:not(:disabled) {
+  background: #e0f2fe;
 }
 
 .employer-actions .reject-btn {
-  background: #fff;
-  border-color: #fda29b;
-  color: #b42318;
+  background: #fff1f2;
+  color: #be123c;
+}
+.employer-actions .reject-btn:hover:not(:disabled) {
+  background: #ffe4e6;
 }
 
 .employer-actions button:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .employer-applicant-overlay,
@@ -1732,7 +1746,7 @@
 
 .employer-form-grid {
   display: grid;
-  gap: 0.9rem;
+  gap: 1.25rem 1.5rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -1769,6 +1783,82 @@
 .employer-form-grid textarea:focus {
   border-color: #d46132;
   box-shadow: 0 0 0 3px rgba(212, 97, 50, 0.1);
+}
+
+.employer-form-grid input[type="file"] {
+  padding: 0.45rem 0.5rem;
+  background: #fbfcfe;
+}
+
+.employer-form-grid input[type="file"]::file-selector-button {
+  background: #eef1f6;
+  border: 1px solid #dce2ea;
+  border-radius: 6px;
+  color: #344054;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-right: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  transition: background 150ms ease;
+}
+
+.employer-form-grid input[type="file"]::file-selector-button:hover {
+  background: #e2e6ec;
+}
+
+/* React Select styling to match form inputs */
+.employer-form-grid .react-select__control {
+  background: #fff;
+  border: 1px solid #dce2ea;
+  border-radius: 9px;
+  box-shadow: none;
+  min-height: 42px;
+}
+
+.employer-form-grid .react-select__control--is-focused {
+  border-color: #d46132;
+  box-shadow: 0 0 0 3px rgba(212, 97, 50, 0.1);
+}
+
+.employer-form-grid .react-select__value-container {
+  padding: 0 0.75rem;
+}
+
+.employer-form-grid .react-select__input-container {
+  margin: 0;
+  padding: 0;
+}
+
+.employer-form-grid .react-select__single-value {
+  color: #344054;
+  font-size: 0.82rem;
+}
+
+.employer-form-grid .react-select__placeholder {
+  color: #98a2b3;
+  font-size: 0.82rem;
+}
+
+.employer-form-grid .react-select__indicator-separator {
+  display: none;
+}
+
+.employer-form-grid .react-select__menu {
+  border-radius: 9px;
+  box-shadow: 0 10px 25px -5px rgba(16, 24, 40, 0.1);
+  font-size: 0.82rem;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.employer-form-grid .react-select__option--is-focused {
+  background: #f8fafc;
+}
+
+.employer-form-grid .react-select__option--is-selected {
+  background: #fff4ee;
+  color: var(--ed-brand-dark);
 }
 
 .employer-form-actions {
@@ -2386,16 +2476,34 @@
 }
 
 .employer-managed-job {
-  border-radius: 19px;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  overflow: hidden;
+  border: 1px solid #edf0f4;
+  background: #ffffff;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px -10px rgba(15, 23, 42, 0.05);
+}
+
+.employer-managed-job:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -16px rgba(15, 23, 42, 0.1);
+  border-color: #d8e0ea;
 }
 
 .employer-managed-job-main {
-  padding: 1.3rem;
+  min-width: 0;
+  padding: 1.5rem;
 }
 
 .employer-managed-job-side {
-  padding: 1.2rem;
-  background: linear-gradient(180deg, #fafbfd, #f4f7fa);
+  padding: 1.5rem;
+  background: #fcfdfe;
+  border-left: 1px dashed #e4e9f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .employer-applicants-panel {
@@ -2417,22 +2525,24 @@
 }
 
 .employer-applicant-table-row {
-  min-height: 78px;
-  padding: 0.8rem;
-  border: 1px solid #e6ebf1;
-  border-radius: 14px;
+  min-height: 84px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #edf2f7;
+  border-radius: 16px;
   background: #ffffff;
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
+  align-items: center;
 }
 
 .employer-applicant-table-row:last-child {
-  border-bottom: 1px solid #e6ebf1;
+  border-bottom: 1px solid #edf2f7;
 }
 
 .employer-applicant-table-row:hover {
-  transform: translateY(-1px);
-  border-color: #d3dce7;
-  box-shadow: 0 14px 28px -24px rgba(15, 23, 42, 0.5);
+  transform: translateY(-2px) scale(1.002);
+  border-color: #e2e8f0;
+  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08);
 }
 
 .employer-mini-applicant > span,
@@ -2449,13 +2559,13 @@
 
 .employer-actions {
   flex-wrap: nowrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .employer-actions button {
   min-height: 36px;
-  padding: 0.45rem 0.62rem;
-  border-radius: 9px;
+  padding: 0.5rem 0.85rem;
+  border-radius: 20px;
 }
 
 .employer-applicant-drawer {
@@ -2562,6 +2672,15 @@
 
   .employer-applicant-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .employer-managed-job {
+    grid-template-columns: 1fr;
+  }
+
+  .employer-managed-job-side {
+    border-left: 0;
+    border-top: 1px dashed #e4e9f0;
   }
 }
 

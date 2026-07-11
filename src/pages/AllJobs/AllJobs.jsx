@@ -172,7 +172,8 @@ const buildQueryString = (params) => {
 };
 
 const AllJobs = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const isEmployer = user?.role === 'employer';
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialKeyword = searchParams.get('keyword') || '';
@@ -1060,6 +1061,7 @@ const AllJobs = () => {
                   onApply={handleApply}
                   saving={savingJobKeys.includes(job.key)}
                   applying={applyingJobKeys.includes(job.key)}
+                  isEmployer={isEmployer}
                 />
               ))
             ) : (

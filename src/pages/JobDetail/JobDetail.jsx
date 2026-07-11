@@ -252,7 +252,8 @@ const normalizeJobDetail = (job, source) => {
 const JobDetail = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const isEmployer = user?.role === 'employer';
   const source = searchParams.get('source') === 'gig' ? 'gig' : 'normal';
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -401,12 +402,14 @@ const JobDetail = () => {
                 </div>
               )}
             </div>
+            {!isEmployer && (
             <div className="job-hero-action">
               <button className="btn-primary btn-large" type="button" onClick={handleApply} disabled={applying || Boolean(job.appliedStatus)}>
                 {job.appliedStatus ? 'Applied' : (applying ? 'Applying...' : 'Apply Now')}
               </button>
               {applyMessage && <p className="apply-message">{applyMessage}</p>}
             </div>
+            )}
           </div>
         </div>
       </div>

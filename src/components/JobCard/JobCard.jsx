@@ -27,7 +27,7 @@ const BookmarkIcon = ({ filled = false }) => (
   </svg>
 );
 
-const JobCard = ({ job, onSaveToggle, onApply, saving = false, applying = false }) => {
+const JobCard = ({ job, onSaveToggle, onApply, saving = false, applying = false, isEmployer = false }) => {
   const isApplied = Boolean(job.appliedStatus);
   const typeClassName = String(job.type || 'job').toLowerCase().replace(/[\s_]+/g, '-');
 
@@ -84,16 +84,18 @@ const JobCard = ({ job, onSaveToggle, onApply, saving = false, applying = false 
 
       <div className="jc-footer">
         <span className="jc-posted">{job.posted}</span>
-        <button
-          className={`jc-apply-btn ${isApplied ? 'is-applied' : ''}`}
-          onClick={(e) => {
-            e.preventDefault();
-            if (!isApplied) onApply?.(job.id, job.source);
-          }}
-          disabled={isApplied || applying}
-        >
-          {isApplied ? 'Applied' : 'Apply Now'}
-        </button>
+        {!isEmployer && (
+          <button
+            className={`jc-apply-btn ${isApplied ? 'is-applied' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              if (!isApplied) onApply?.(job.id, job.source);
+            }}
+            disabled={isApplied || applying}
+          >
+            {isApplied ? 'Applied' : 'Apply Now'}
+          </button>
+        )}
       </div>
     </article>
   );
