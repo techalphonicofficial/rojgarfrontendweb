@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './JobCard.css';
 
 const LocationIcon = () => (
@@ -28,11 +28,21 @@ const BookmarkIcon = ({ filled = false }) => (
 );
 
 const JobCard = ({ job, onSaveToggle, onApply, saving = false, applying = false, isEmployer = false }) => {
+  const navigate = useNavigate();
   const isApplied = Boolean(job.appliedStatus);
+  const isSaved = Boolean(job.isSaved || job.savedStatus);
   const typeClassName = String(job.type || 'job').toLowerCase().replace(/[\s_]+/g, '-');
 
+  const handleCardClick = (e) => {
+    // Do not navigate if the user is clicking an interactive action button/link
+    if (e.target.closest('button') || e.target.closest('a')) {
+      return;
+    }
+    navigate(`/jobs/${job.id}${job.source === 'gig' ? '?source=gig' : ''}`);
+  };
+
   return (
-    <article className={`job-card-simple is-${job.source || 'normal'}`}>
+    <article className={`job-card-simple is-${job.source || 'normal'}`} onClick={handleCardClick}>
       <div className="jc-header">
         <div className="jc-title-wrap">
           <h3 className="jc-title">
@@ -46,15 +56,15 @@ const JobCard = ({ job, onSaveToggle, onApply, saving = false, applying = false,
           </div>
         </div>
         <button
-          className={`jc-save-btn ${job.savedStatus ? 'is-saved' : ''}`}
+          className={`jc-save-btn ${isSaved ? 'is-saved' : ''}`}
           onClick={(e) => {
             e.preventDefault();
             onSaveToggle?.(job.id, job.source);
           }}
           disabled={saving}
-          aria-label={job.savedStatus ? 'Unsave job' : 'Save job'}
+          aria-label={isSaved ? 'Unsave job' : 'Save job'}
         >
-          <BookmarkIcon filled={job.savedStatus} />
+          <BookmarkIcon filled={isSaved} />
         </button>
       </div>
 

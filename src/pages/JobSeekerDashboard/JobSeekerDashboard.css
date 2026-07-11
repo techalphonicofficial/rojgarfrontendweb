@@ -463,17 +463,18 @@
 
 
 .dashboard-saved-row {
-  min-height: 110px;
-  padding: 1.25rem;
-  border-color: var(--db-border);
-  border-radius: var(--db-radius-sm);
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: var(--db-shadow-sm);
+  min-height: 100px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #edf2f7;
+  border-radius: 16px;
+  background: #ffffff;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
 }
 
 .dashboard-saved-row:hover {
-  border-color: var(--db-primary);
-  box-shadow: var(--db-shadow-md);
+  border-color: #e2e8f0;
+  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08);
   transform: translateY(-2px);
 }
 
@@ -543,29 +544,47 @@
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
+  align-items: center;
   width: 100%;
 }
 
 .dashboard-saved-actions .dashboard-secondary-btn {
   min-width: 76px;
   min-height: 36px;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-saved-actions button.dashboard-secondary-btn {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.dashboard-saved-actions button.dashboard-secondary-btn:hover {
+  background: #ffe4e6;
+  transform: translateY(-1px);
 }
 
 .dashboard-saved-actions a.dashboard-secondary-btn {
-  background: linear-gradient(135deg, var(--db-primary), var(--db-primary-dark));
+  background: linear-gradient(135deg, #e6643c, #c94e27);
   color: #ffffff;
-  border: none;
   box-shadow: 0 4px 10px rgba(230, 100, 60, 0.2);
+  text-decoration: none;
 }
 
 .dashboard-saved-actions a.dashboard-secondary-btn:hover {
-  background: linear-gradient(135deg, var(--db-primary-dark), #a33d1e);
+  background: linear-gradient(135deg, #c94e27, #a33d1e);
   color: #ffffff;
   box-shadow: 0 6px 14px rgba(230, 100, 60, 0.3);
+  transform: translateY(-1px);
 }
 
 .dashboard-secondary-btn:disabled {

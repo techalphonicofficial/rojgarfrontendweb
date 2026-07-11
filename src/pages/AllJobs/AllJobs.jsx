@@ -205,6 +205,7 @@ const AllJobs = () => {
   const [gigStartTime, setGigStartTime] = useState('');
   const [gigEndTime, setGigEndTime] = useState('');
   const [categorySearch, setCategorySearch] = useState('');
+  const [showAllCategories, setShowAllCategories] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobs, setJobs] = useState([]);
   const [meta, setMeta] = useState({
@@ -359,7 +360,9 @@ const AllJobs = () => {
       const gigQuery = buildQueryString({
         ...commonParams,
         city: locationTerm,
-        radius_km: nearbyGigOnly && userLocation ? NEARBY_GIG_RADIUS_KM : ''
+        radius_km: nearbyGigOnly && userLocation ? NEARBY_GIG_RADIUS_KM : '',
+        start_time: gigStartTime || undefined,
+        end_time: gigEndTime || undefined
       });
       const requests = [];
 
@@ -433,7 +436,9 @@ const AllJobs = () => {
     selectedState,
     userLocation,
     minimumPay,
-    postedWithin
+    postedWithin,
+    gigStartTime,
+    gigEndTime
   ]);
 
   const lookupName = (items, selectedId) => items.find((item) => String(item.id) === String(selectedId))?.name || '';
@@ -614,7 +619,10 @@ const AllJobs = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSaveToggle = async (job) => {
+  const handleSaveToggle = async (id, source) => {
+    const job = jobs.find((item) => item.id === id && item.source === source);
+    if (!job) return;
+
     if (!isAuthenticated) {
       setError('Please login as a job seeker to save jobs.');
       return;
@@ -795,7 +803,7 @@ const AllJobs = () => {
             <div className="category-pills">
               {lookups.categories
                 .filter((cat) => cat.name.toLowerCase().includes(categorySearch.toLowerCase()))
-                .slice(0, 6)
+                .slice(0, showAllCategories ? undefined : 6)
                 .map((category) => (
                   <button
                     key={category.id || category.code}
@@ -814,8 +822,12 @@ const AllJobs = () => {
                 ))}
             </div>
             {lookups.categories.length > 6 && !categorySearch && (
-              <button className="more-categories-btn">
-                +{lookups.categories.length - 6} more
+              <button 
+                type="button" 
+                className="more-categories-btn" 
+                onClick={() => setShowAllCategories((prev) => !prev)}
+              >
+                {showAllCategories ? 'Show less' : `+${lookups.categories.length - 6} more`}
               </button>
             )}
           </div>

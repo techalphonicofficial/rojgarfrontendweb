@@ -83,76 +83,78 @@ const LocationPicker = () => {
   };
 
   return (
-    <section className="location-picker">
-      <h2 className="section-title">Select Location</h2>
-      <p className="location-helper">Choose a city to find nearby opportunities.</p>
-      <form onSubmit={handleFindJobs}>
-        <div className="select-group">
-          <label className="select-label">
-            Country
-            <select
-              value={selectedCountry}
-              onChange={(e) => {
-                setSelectedCountry(e.target.value);
-                setSelectedState('');
-                setSelectedCity('');
-                setStates([]);
-                setCities([]);
-              }}
-              className="styled-select"
-            >
-              <option value="">-- Choose Country --</option>
-              {countries.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="select-label">
-            State
-            <select
-              value={selectedState}
-              onChange={(e) => {
-                setSelectedState(e.target.value);
-                setSelectedCity('');
-                setCities([]);
-              }}
-              disabled={!selectedCountry}
-              className="styled-select"
-            >
-              <option value="">-- Choose State --</option>
-              {states.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="select-label">
-            City
-            <select
-              value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-              disabled={!selectedState}
-              className="styled-select"
-            >
-              <option value="">-- Choose City --</option>
-              {cities.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className="location-actions">
-          <button type="submit" className="btn-primary" disabled={!selectedCity}>
-            Find Jobs
-          </button>
-        </div>
-      </form>
-    </section>
+    <div className="location-page-container">
+      <section className="location-picker">
+        <h2 className="section-title">Select Location</h2>
+        <p className="location-helper">Choose a city to find nearby opportunities.</p>
+        <form onSubmit={handleFindJobs}>
+          <div className="select-group">
+            <label className="select-label">
+              Country
+              <select
+                value={selectedCountry}
+                onChange={(e) => {
+                  setSelectedCountry(e.target.value);
+                  setSelectedState('');
+                  setSelectedCity('');
+                  setStates([]);
+                  setCities([]);
+                }}
+                className="styled-select"
+              >
+                <option value="">-- Choose Country --</option>
+                {countries.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="select-label">
+              State
+              <select
+                value={selectedState}
+                onChange={(e) => {
+                  setSelectedState(e.target.value);
+                  setSelectedCity('');
+                  setCities([]);
+                }}
+                disabled={!selectedCountry}
+                className="styled-select"
+              >
+                <option value="">-- Choose State --</option>
+                {states.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="select-label">
+              City
+              <select
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                disabled={!selectedState}
+                className="styled-select"
+              >
+                <option value="">-- Choose City --</option>
+                {cities.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="location-actions">
+            <button type="submit" className="btn-primary" disabled={!selectedCity}>
+              Find Jobs
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
   );
 };
 
